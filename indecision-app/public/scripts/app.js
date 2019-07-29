@@ -4,14 +4,16 @@
 
 console.log("App.js is running!");
 
-// create app object title/subtitle
-// user title/subtitle in the template
-// render template
+// if statements
+// ternary operators
+// logical and operator
 
-// JSX - JavaScript XML
+// only render the subtitle (and p tag) if subtitle exist - logical and operator
+// render new p tag - if options.length > 0 "Here are your options" "No options"
+
 var app = {
   title: "Indecision App",
-  subtitle: "Put your life in the hands of a computer"
+  options: ["One"]
 };
 
 var template = React.createElement(
@@ -22,10 +24,15 @@ var template = React.createElement(
     null,
     app.title
   ),
-  React.createElement(
+  app.subtitle && React.createElement(
     "p",
     null,
     app.subtitle
+  ),
+  React.createElement(
+    "p",
+    null,
+    app.options.length > 0 ? "Here are your options" : "No Options"
   ),
   React.createElement(
     "ol",
@@ -42,48 +49,55 @@ var template = React.createElement(
     )
   )
 );
+// console.log(template);
 
-// Create user varaialbe for reusable code
-var user = {
-  name: "Alfred",
-  age: 26,
-  location: ""
+// **************************
+var count = 0;
+var addOne = function addOne() {
+  //count = count + 1; - Using short hand below
+  count++;
+  renderCounterApp();
 };
-
-//getLocation function determines if user varible provided a location
-function getLocation(location) {
-  //location is the aurgument
-  if (location) {
-    // if location is preovided return location entry
-    return location;
-    // if locatoin is not  provided return Unknown
-  } else {
-    return "Unknown";
-  }
-}
-
-var templateTwo = React.createElement(
-  "div",
-  null,
-  React.createElement(
-    "h1",
-    null,
-    user.name
-  ),
-  React.createElement(
-    "p",
-    null,
-    "Age: ",
-    user.age
-  ),
-  React.createElement(
-    "p",
-    null,
-    "Location: ",
-    getLocation(user.location)
-  )
-);
+var minusOne = function minusOne() {
+  //count = count - 1;
+  count--;
+  renderCounterApp();
+};
+var reset = function reset() {
+  count = 0;
+  renderCounterApp();
+};
 
 var appRoot = document.getElementById("app");
 
-ReactDOM.render(templateTwo, appRoot);
+var renderCounterApp = function renderCounterApp() {
+  var templateTwo = React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "h1",
+      null,
+      "Count: ",
+      count
+    ),
+    React.createElement(
+      "button",
+      { onClick: addOne },
+      "+1"
+    ),
+    React.createElement(
+      "button",
+      { onClick: minusOne },
+      "-1"
+    ),
+    React.createElement(
+      "button",
+      { onClick: reset },
+      "Reset"
+    )
+  );
+
+  ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();

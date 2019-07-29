@@ -2,54 +2,61 @@
 
 console.log("App.js is running!");
 
-// create app object title/subtitle
-// user title/subtitle in the template
-// render template
+// if statements
+// ternary operators
+// logical and operator
 
-// JSX - JavaScript XML
-var app = {
+// only render the subtitle (and p tag) if subtitle exist - logical and operator
+// render new p tag - if options.length > 0 "Here are your options" "No options"
+
+const app = {
   title: "Indecision App",
-  subtitle: "Put your life in the hands of a computer"
+  options: ["One"]
 };
 
-var template = (
+const template = (
   <div>
     <h1>{app.title}</h1>
-    <p>{app.subtitle}</p>
+    {app.subtitle && <p>{app.subtitle}</p>}
+    <p>{app.options.length > 0 ? "Here are your options" : "No Options"}</p>
     <ol>
       <li>Item One</li>
       <li>Item Two</li>
     </ol>
   </div>
 );
+// console.log(template);
 
-// Create user varaialbe for reusable code
-var user = {
-  name: "Alfred",
-  age: 26,
-  location: ""
+// **************************
+let count = 0;
+const addOne = () => {
+  //count = count + 1; - Using short hand below
+  count++;
+  renderCounterApp();
+};
+const minusOne = () => {
+  //count = count - 1;
+  count--;
+  renderCounterApp();
+};
+const reset = () => {
+  count = 0;
+  renderCounterApp();
 };
 
-//getLocation function determines if user varible provided a location
-function getLocation(location) {
-  //location is the aurgument
-  if (location) {
-    // if location is preovided return location entry
-    return location;
-    // if locatoin is not  provided return Unknown
-  } else {
-    return "Unknown";
-  }
-}
+const appRoot = document.getElementById("app");
 
-var templateTwo = (
-  <div>
-    <h1>{user.name}</h1>
-    <p>Age: {user.age}</p>
-    <p>Location: {getLocation(user.location)}</p>
-  </div>
-);
+const renderCounterApp = () => {
+  const templateTwo = (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={addOne}>+1</button>
+      <button onClick={minusOne}>-1</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
 
-var appRoot = document.getElementById("app");
+  ReactDOM.render(templateTwo, appRoot);
+};
 
-ReactDOM.render(templateTwo, appRoot);
+renderCounterApp();
